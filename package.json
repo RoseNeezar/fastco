@@ -1,0 +1,15 @@
+{
+  "name": "@fastco/root",
+  "private": true,
+  "scripts": {
+    "dev:part_1": "lerna run --scope @fastco/part_1 --parallel dev",
+    "add:part_1": "lerna add --scope @fastco/part_1",
+    "bootstrap": "lerna bootstrap --ignore-scripts"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}
