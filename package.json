@@ -6,6 +6,8 @@
     "add:part_1": "lerna add --scope @fastco/part_1",
     "dev:part_2": "lerna run --scope @fastco/part_2 --parallel dev",
     "add:part_2": "lerna add --scope @fastco/part_2",
+    "dev:part_3": "lerna run --scope @fastco/part_3 --parallel dev",
+    "add:part_3": "lerna add --scope @fastco/part_3",
     "bootstrap": "lerna bootstrap --ignore-scripts"
   },
   "devDependencies": {
