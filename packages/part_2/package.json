@@ -4,21 +4,27 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start:dev": "tsx src/index.ts",
+    "migrate": "tsx ./src/run_migration.ts",
+    "migrate-down": "tsx ./src/revert_migration.ts",
+    "start:dev": "tsx --watch ./src/index.ts",
     "start:prod": "node dist/index.js",
     "build": "tsc"
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "glob": "^9.3.2",
     "mongodb": "^5.1.0",
     "mongoose": "^7.0.3",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/multer": "^1.4.7",
+    "@types/uuid": "^9.0.1",
     "tsx": "^3.12.6",
     "typescript": "^5.0.2"
   }
