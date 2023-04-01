@@ -33,7 +33,7 @@ const Q3 = async (collection: Collection<UserDocument>) => {
 async function main() {
   try {
     await client.connect();
-    const db = client.db("test");
+    const db = client.db("part_1");
     const collection = db.collection<UserDocument>("users");
 
     const [q1Result, q2Result, q3Result] = await Promise.all([

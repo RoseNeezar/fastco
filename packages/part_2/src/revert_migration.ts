@@ -5,7 +5,7 @@ import path from "path";
 const revertMigrations = async () => {
   try {
     const migrationFiles = glob.sync("src/migrations/*.ts");
-    await mongoose.connect("mongodb://root:example@localhost:27017");
+    await mongoose.connect("mongodb://root:example@localhost:28017");
 
     for (const migrationFile of migrationFiles) {
       const migration = await import(path.resolve(migrationFile));
