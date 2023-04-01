@@ -1,20 +1,19 @@
 import mongoose, { Schema } from "mongoose";
 
-// to create a user
 export interface UserAttrs {
   email: string;
   password: string;
   firstName: string;
+  profilePic?: string;
 }
 
-// properties a single user has
 export interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
   firstName: string;
+  profilePic?: string;
 }
 
-// entire collection looks like
 export interface UserModel extends mongoose.Model<UserDoc> {
   build(attr: UserAttrs): UserDoc;
 }
@@ -33,6 +32,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+    },
+    profilePic: {
+      type: String,
+      default: `https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y')`,
     },
   },
   {

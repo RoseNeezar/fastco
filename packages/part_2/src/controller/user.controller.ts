@@ -3,65 +3,65 @@ import { User } from "../models/user.models";
 import { RequestTyped } from "../types/types";
 import fs from "fs";
 
-export const getUserByUsername = async (
-  req: RequestTyped<{}, {}, { username: string }>,
+export const getUsersList = async (
+  req: RequestTyped<{}, {}, {}>,
   res: Response
 ) => {
-  const username = req.params.username;
-
-  const user = await User.findOne({ username: username });
+  const user = await User.find();
 
   if (!user) {
-    throw new Error("User not found");
+    return res.status(404).json({ message: "Users not found" });
   }
 
   res.status(200).send(user);
 };
 
-export const searchUser = async (
-  req: RequestTyped<{}, { search?: string }, {}>,
-  res: Response
-) => {
-  let searchObj = {};
-
-  if (req.query.search !== undefined) {
-    searchObj = {
-      $or: [
-        { firstName: { $regex: req.query.search, $options: "i" } },
-        { lastName: { $regex: req.query.search, $options: "i" } },
-        { username: { $regex: req.query.search, $options: "i" } },
-      ],
-    };
-  }
-
-  User.find(searchObj)
-    .then((results) => res.status(200).send(results))
-    .catch((error) => {
-      console.log(error);
-      throw new Error("no user found");
-    });
-};
-
 export const updateProfileBanner = async (
-  req: RequestTyped<{}, {}, { userId: string }>,
+  req: RequestTyped<{}, { email: string }, {}>,
   res: Response
 ) => {
-  //@ts-ignore
   if (!req.file) {
     console.log("No file uploaded with ajax request.");
-    throw new Error("No file uploaded with ajax request.");
+    return res
+      .status(404)
+      .json({ message: "No file uploaded with ajax request." });
   }
 
+  let currentUser = await User.findOne({
+    email: req.query.email,
+  });
+
+  if (!currentUser) {
+    return res.status(404).json({ message: "Users not found" });
+  }
+
+  const oldProfilePicTemp = currentUser!.profilePic!.split("/");
+  const imgRex = /[\/.](gif|jpg|jpeg|tiff|png)$/i;
+  if (oldProfilePicTemp) {
+    const oldBanner = oldProfilePicTemp[oldProfilePicTemp!.length - 1];
+    if (imgRex.test(oldBanner)) {
+      const filePath = `public/images/${oldBanner}`;
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (error) {
+          console.error(`Error deleting file: ${error.message}`);
+        }
+      }
+    }
+  }
   try {
-    req.currentUserIp = await User.findByIdAndUpdate(
-      // req.currentUserIp?.id,
-      // { coverPhoto: `${process.env.APP_URL}/images/${req.file.filename}` },
+    currentUser = await User.findByIdAndUpdate(
+      currentUser?.id,
+      { profilePic: `${process.env.APP_URL}/images/${req.file.filename}` },
       { new: true }
     );
 
-    res.sendStatus(204);
+    res.sendStatus(204).json({ message: "Ok" });
   } catch (error) {
     console.log(error);
-    throw new Error("no file found");
+    return res
+      .status(404)
+      .json({ message: "No file uploaded with ajax request." });
   }
 };
