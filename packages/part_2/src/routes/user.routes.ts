@@ -1,16 +1,20 @@
 import express from "express";
+import {
+  getUsersList,
+  updateProfileBanner,
+} from "../controller/user.controller";
+import { currentUserIp } from "../middlewares/currrent-user.middleware";
 import multer, { FileFilterCallback } from "multer";
+import { v4 } from "uuid";
 import path from "path";
-import { searchUser, updateProfileBanner } from "../controller/user.controller";
-import { currentUser } from "../middlewares/currrent-user.middleware";
-import { makeId } from "../utils/helpers";
 
 const upload = multer({
   storage: multer.diskStorage({
     destination: "public/images",
     filename: (_, file, callback) => {
-      const name = makeId(15);
-      callback(null, name + path.extname(file.originalname)); // e.g. jh34gh2v4y + .png
+      const name = v4();
+
+      callback(null, name + path.extname(file.originalname));
     },
   }),
   fileFilter: (_, file: any, callback: FileFilterCallback) => {
@@ -21,13 +25,14 @@ const upload = multer({
     }
   },
 });
+
 const UserRoute = express.Router();
 
-UserRoute.route("/").get(currentUser, searchUser);
+UserRoute.route("/").get(currentUserIp, getUsersList);
 
-UserRoute.route("/coverPhoto").post(
-  currentUser,
-  upload.single("croppedImage"),
+UserRoute.route("/profilePic").post(
+  currentUserIp,
+  upload.single("profilePic"),
   updateProfileBanner
 );
 
