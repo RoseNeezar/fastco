@@ -1,0 +1,19 @@
+{
+  "name": "@fastco/part_4",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start:dev": "tsx src/index.ts",
+    "start:prod": "node dist/index.js",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "mongodb": "^5.1.0"
+  },
+  "devDependencies": {
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.2"
+  }
+}
