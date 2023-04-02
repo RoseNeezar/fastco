@@ -1,6 +1,6 @@
 version: "3.5"
 services:
-  mongo:
+  part_1_mongo:
     image: "mongo:latest"
     command: mongod
     ports:
@@ -13,6 +13,14 @@ services:
     command: mongod
     ports:
       - "28017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+  part_5_mongo:
+    image: "mongo:latest"
+    command: mongod
+    ports:
+      - "29017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example

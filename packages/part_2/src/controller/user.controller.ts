@@ -16,7 +16,7 @@ export const getUsersList = async (
   res.status(200).send(user);
 };
 
-export const updateProfileBanner = async (
+export const updateProfilePic = async (
   req: RequestTyped<{}, { email: string }, {}>,
   res: Response
 ) => {
