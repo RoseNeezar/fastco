@@ -1,8 +1,5 @@
 import express from "express";
-import {
-  getUsersList,
-  updateProfileBanner,
-} from "../controller/user.controller";
+import { getUsersList, updateProfilePic } from "../controller/user.controller";
 import { currentUserIp } from "../middlewares/currrent-user.middleware";
 import multer, { FileFilterCallback } from "multer";
 import { v4 } from "uuid";
@@ -33,7 +30,7 @@ UserRoute.route("/").get(currentUserIp, getUsersList);
 UserRoute.route("/profilePic").post(
   currentUserIp,
   upload.single("profilePic"),
-  updateProfileBanner
+  updateProfilePic
 );
 
 export default UserRoute;
