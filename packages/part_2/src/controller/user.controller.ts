@@ -57,7 +57,7 @@ export const updateProfilePic = async (
       { new: true }
     );
 
-    res.sendStatus(204).json({ message: "Ok" });
+    res.status(204).json({ message: "Ok" });
   } catch (error) {
     console.log(error);
     return res

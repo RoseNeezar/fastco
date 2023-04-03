@@ -84,11 +84,7 @@ const TodoForm: FC<{
     reset();
     close();
   };
-  console.log(
-    "=========",
-    todoData,
-    todoData?.dueDate && new Date(todoData?.dueDate)
-  );
+
   return (
     <form
       className="form-control w-full max-w-xs"
